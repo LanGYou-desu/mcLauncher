@@ -306,7 +306,7 @@ export class GameService extends EventEmitter {
         accessToken,
         userType,
         launcherName: 'MineHarbor',
-        launcherBrand: 'MineHarbor 1.0.3',
+        launcherBrand: 'MineHarbor 1.0.4',
         maxMemory,
         minMemory,
         extraJVMArgs: splitCommandLine(config.jvmArgs),

@@ -224,16 +224,10 @@ export function VersionsPage() {
                   </div>
                   <div className="instance-cover-heading">
                     <h3 title={instance.name}>{instance.name}</h3>
-                    <p>
-                      MC {instance.mcVersion}
-                      <span>·</span>
-                      {meta.name}{instance.loaderVersion ? ' ' + instance.loaderVersion : ''}
-                    </p>
                   </div>
                   <div className="instance-cover-cube"><i /><i /><i /><i /></div>
                   <div className="instance-cover-bottom">
                     {running ? <span className="cover-running"><span className="live-dot" /> 游戏运行中</span> : <span>{instance.external ? '外部导入' : '矿港实例'}</span>}
-                    <span>{instance.loaderVersion ?? '原版'}</span>
                   </div>
                 </div>
                 {menuId === instance.id ? (
@@ -255,9 +249,12 @@ export function VersionsPage() {
                 ) : null}
                 <div className="instance-card-body">
                   <div className="instance-title-row">
-                    <div className="instance-version-summary">
-                      <strong>Minecraft {instance.mcVersion}</strong>
-                      <span>{instance.loaderVersion ? meta.name + ' ' + instance.loaderVersion : '原版 Minecraft'}</span>
+                    <div className="instance-runtime-line">
+                      <span className="runtime-mc">MC {instance.mcVersion}</span>
+                      <span className="runtime-dot">·</span>
+                      <span className="runtime-loader" title={`${meta.name}${instance.loaderVersion ? ' ' + instance.loaderVersion : ''}`}>
+                        {meta.name}{instance.loaderVersion ? ' ' + instance.loaderVersion : ''}
+                      </span>
                     </div>
                     <button
                       className={`instance-play ${running ? 'is-running' : ''}`}

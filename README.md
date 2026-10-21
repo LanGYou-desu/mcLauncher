@@ -46,6 +46,7 @@
   - 删除文件、在资源管理器中定位；
   - 读取 Fabric / Quilt / Forge / NeoForge 模组元数据和图标。
 - 支持打开实例目录、打开游戏根目录、重命名实例、手动输入实例 Java/内存上限、修复版本文件。
+- 版本卡片封面只突出实例名，MC 版本和加载器信息统一放在卡片下方的一行中，避免重复显示。
 - 实时游戏控制台：启动游戏、查看 stdout/stderr、复制日志、结束进程。
 - 兼容 PCL2：识别 `versions/<版本>/PCL/Setup.ini` 版本隔离标记，并将对应版本目录作为独立游戏目录导入，原有 mods、存档和设置可以直接管理。
 - 外部导入的实例保留来源版本目录的名称；只有与现有实例重名时才自动追加序号。
@@ -123,8 +124,8 @@
 
 同时生成 NSIS 安装包与便携版，输出位于 release/ 目录：
 
-- `MineHarbor-Setup-1.0.3.exe`：可交互安装包，可自选安装目录，创建桌面与开始菜单快捷方式；
-- `MineHarbor-1.0.3-portable.exe`：便携版，双击运行。
+- `MineHarbor-Setup-1.0.4.exe`：可交互安装包，可自选安装目录，创建桌面与开始菜单快捷方式；
+- `MineHarbor-1.0.4-portable.exe`：便携版，双击运行。
 
 只生成安装包可以执行 `npm run build:installer`，或双击 **build-installer.bat**。安装包默认按当前用户安装，不需要管理员权限；卸载时保留 `.minecraft` 和 `MineHarborData` 数据目录。
 

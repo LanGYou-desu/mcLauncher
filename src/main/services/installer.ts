@@ -255,7 +255,7 @@ export function createDownloadOptions(source: DownloadSource, config: LauncherCo
     // A tuned dispatcher prevents one stalled CDN connection from blocking the
     // whole install for many minutes.
     agent: { dispatcher: downloadAgent },
-    headers: { 'User-Agent': 'MineHarbor/1.0.3 (Minecraft launcher)' },
+    headers: { 'User-Agent': 'MineHarbor/1.0.4 (Minecraft launcher)' },
     side: 'client'
   }
 }
