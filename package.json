@@ -1,0 +1,89 @@
+{
+  "name": "mineharbor",
+  "version": "1.0.0",
+  "description": "矿港 MineHarbor — 现代化的 Minecraft 启动器",
+  "main": "./out/main/index.js",
+  "author": "MineHarbor",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "electron-vite dev",
+    "start": "electron .",
+    "build": "electron-vite build",
+    "build:win": "electron-vite build && electron-builder --win",
+    "package:dir": "electron-vite build && electron-builder --dir",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
+    "build:installer": "electron-vite build && electron-builder --win nsis"
+  },
+  "dependencies": {
+    "@xmcl/core": "2.13.0",
+    "@xmcl/installer": "5.4.0",
+    "adm-zip": "^0.5.16",
+    "lucide-react": "^0.468.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "undici": "^6.0.1"
+  },
+  "devDependencies": {
+    "@types/adm-zip": "^0.5.7",
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^35.0.0",
+    "electron-builder": "^26.0.12",
+    "electron-vite": "^3.0.0",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5",
+    "vitest": "^3.0.0"
+  },
+  "build": {
+    "appId": "com.mineharbor.launcher",
+    "productName": "MineHarbor",
+    "directories": {
+      "output": "release",
+      "buildResources": "resources"
+    },
+    "files": [
+      "out/**/*",
+      "resources/**/*",
+      "package.json"
+    ],
+    "asar": true,
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "resources/icon.ico",
+      "artifactName": "MineHarbor-${version}-portable.${ext}"
+    },
+    "portable": {
+      "artifactName": "MineHarbor-${version}-portable.exe"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "shortcutName": "矿港 MineHarbor",
+      "artifactName": "MineHarbor-Setup-${version}.${ext}",
+      "include": "resources/installer.nsh",
+      "deleteAppDataOnUninstall": false
+    }
+  }
+}
