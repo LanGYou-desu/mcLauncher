@@ -1,6 +1,6 @@
 {
   "name": "mineharbor",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "矿港 MineHarbor — 现代化的 Minecraft 启动器",
   "main": "./out/main/index.js",
   "author": "MineHarbor",

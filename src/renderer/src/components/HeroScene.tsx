@@ -95,8 +95,8 @@ function Portal({ x, y, scale = 1 }: { x: number; y: number; scale?: number }) {
       <circle cx="-19" cy="-38" r="2.2" fill="#cbb3ff" />
       <circle cx="18" cy="-14" r="1.6" fill="#f1d8ff" />
       <circle cx="-24" cy="-7" r="1.2" fill="#b79aff" />
-      <path d="M-27 15 C-33 25 -28 35 -22 47" stroke="#5b7d45" strokeWidth="3" fill="none" strokeLinecap="round" />
-      <path d="M25 16 C31 27 27 35 31 48" stroke="#5b7d45" strokeWidth="3" fill="none" strokeLinecap="round" />
+      <path d="M-27 15 C-31 20 -27 24 -22 25" stroke="#5b7d45" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+      <path d="M25 16 C28 21 25 25 20 26" stroke="#5b7d45" strokeWidth="2.5" fill="none" strokeLinecap="round" />
     </g>
   )
 }
@@ -250,7 +250,7 @@ export function HeroScene({ loader = 'vanilla', mcVersion = '1.21.1', mods = 0 }
           <path d="M246 300 L430 390 L614 300" fill="none" stroke="#edffcf" strokeOpacity=".08" strokeWidth="1" />
 
           {/* Pond */}
-          <g>
+          <g transform="translate(-50 -28)">
             <path d="M314 297 L393 336 L465 298 L384 260 Z" fill="#368834" opacity=".8" />
             <path d="M322 296 L393 330 L457 296 L386 263 Z" fill="url(#hs-water)" />
             <path d="M339 293 C365 285 411 287 430 300 C402 316 360 316 339 304 Z" fill="#b4fffd" opacity=".18" />
@@ -273,9 +273,9 @@ export function HeroScene({ loader = 'vanilla', mcVersion = '1.21.1', mods = 0 }
           <Tree x={266} y={319} scale={0.94} />
           <Tree x={581} y={285} scale={0.58} colorful />
           <Tree x={333} y={242} scale={0.42} colorful />
-          <Portal x={583} y={360} scale={0.98} />
-          <Steve x={399} y={337} />
-          <Lamp x={508} y={348} />
+          <Portal x={545} y={315} scale={0.98} />
+          <Steve x={440} y={350} />
+          <Lamp x={490} y={355} />
 
           {/* Flowers and grass tufts */}
           <g>

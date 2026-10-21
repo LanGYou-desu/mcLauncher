@@ -123,8 +123,8 @@
 
 同时生成 NSIS 安装包与便携版，输出位于 release/ 目录：
 
-- `MineHarbor-Setup-1.0.2.exe`：可交互安装包，可自选安装目录，创建桌面与开始菜单快捷方式；
-- `MineHarbor-1.0.2-portable.exe`：便携版，双击运行。
+- `MineHarbor-Setup-1.0.3.exe`：可交互安装包，可自选安装目录，创建桌面与开始菜单快捷方式；
+- `MineHarbor-1.0.3-portable.exe`：便携版，双击运行。
 
 只生成安装包可以执行 `npm run build:installer`，或双击 **build-installer.bat**。安装包默认按当前用户安装，不需要管理员权限；卸载时保留 `.minecraft` 和 `MineHarborData` 数据目录。
 

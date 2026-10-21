@@ -6,7 +6,7 @@ import { Readable, Transform } from 'node:stream'
 import { pipeline } from 'node:stream/promises'
 
 const DEFAULT_USER_AGENT =
-  'MineHarbor/1.0.2 (Minecraft launcher; +https://github.com/LanGYou-desu/mcLauncher)'
+  'MineHarbor/1.0.3 (Minecraft launcher; +https://github.com/LanGYou-desu/mcLauncher)'
 
 export interface FetchOptions {
   timeoutMs?: number
