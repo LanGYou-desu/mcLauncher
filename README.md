@@ -49,6 +49,7 @@
 - 实时游戏控制台：启动游戏、查看 stdout/stderr、复制日志、结束进程。
 - 兼容 PCL2：识别 `versions/<版本>/PCL/Setup.ini` 版本隔离标记，并将对应版本目录作为独立游戏目录导入，原有 mods、存档和设置可以直接管理。
 - 外部导入的实例保留来源版本目录的名称；只有与现有实例重名时才自动追加序号。
+- 外部/PCL2 实例启动时优先使用版本目录内的自建 jar，并跳过对已有第三方游戏文件的 SHA-1 强校验，避免把 PCL2 的独立版本误判为损坏。
 
 ### 本机扫描
 
@@ -113,7 +114,7 @@
     npm run typecheck
     npm test
 
-测试覆盖镜像 URL 重写、Java 版本解析、实例内容管理、路径安全、本地版本扫描、PCL2 目录识别、Microsoft 登录与刷新链路、错误映射与加载器元数据，共 27 个断言。
+测试覆盖镜像 URL 重写、Java 版本解析、实例内容管理、路径安全、本地版本扫描、PCL2 目录识别、Microsoft 登录与刷新链路、错误映射与加载器元数据，共 28 个断言。
 
 ### 打包安装包
 
@@ -121,8 +122,8 @@
 
 同时生成 NSIS 安装包与便携版，输出位于 release/ 目录：
 
-- `MineHarbor-Setup-1.0.0.exe`：可交互安装包，可自选安装目录，创建桌面与开始菜单快捷方式；
-- `MineHarbor-1.0.0-portable.exe`：便携版，双击运行。
+- `MineHarbor-Setup-1.0.1.exe`：可交互安装包，可自选安装目录，创建桌面与开始菜单快捷方式；
+- `MineHarbor-1.0.1-portable.exe`：便携版，双击运行。
 
 只生成安装包可以执行 `npm run build:installer`，或双击 **build-installer.bat**。安装包默认按当前用户安装，不需要管理员权限；卸载时保留 `.minecraft` 和 `MineHarborData` 数据目录。
 

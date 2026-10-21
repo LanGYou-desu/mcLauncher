@@ -3,7 +3,7 @@ import { existsSync } from 'node:fs'
 import { mkdir, open, stat } from 'node:fs/promises'
 import { isAbsolute, join, resolve } from 'node:path'
 import type { ChildProcess } from 'node:child_process'
-import { Version, launch as launchMinecraft } from '@xmcl/core'
+import { LaunchPrecheck, Version, launch as launchMinecraft } from '@xmcl/core'
 import type {
   DownloadSource,
   InstallGameRequest,
@@ -25,6 +25,15 @@ import { installCore } from './installer'
 import { normalizeMinecraftRoot } from './minecraft'
 import { chooseJava } from './java'
 import { offlineUuid, newId, safeFileName, sanitizePlayerName, splitCommandLine, trimDescription } from './util'
+
+export function resolveClientJarVersion(
+  instance: Pick<Instance, 'minecraftRoot' | 'versionId' | 'external'>,
+  minecraftVersion: string
+): string {
+  const localClientJar = join(instance.minecraftRoot, 'versions', instance.versionId, `${instance.versionId}.jar`)
+  if (instance.external && existsSync(localClientJar)) return instance.versionId
+  return minecraftVersion
+}
 
 export interface GameServiceOptions {
   config: ConfigStore
@@ -235,6 +244,15 @@ export class GameService extends EventEmitter {
     } catch (error) {
       throw new Error(`无法解析版本：${error instanceof Error ? error.message : String(error)}`)
     }
+    // Some PCL2/third-party versions are standalone JSONs whose client jar is
+    // stored under the version id (for example versions/RLCraft/RLCraft.jar)
+    // while clientVersion points at a different Minecraft version. @xmcl/core
+    // chooses the classpath jar from minecraftVersion, so point it at the
+    // local jar that actually belongs to this version.
+    const clientJarVersion = resolveClientJarVersion(instance, resolvedVersion.minecraftVersion)
+    if (clientJarVersion !== resolvedVersion.minecraftVersion) {
+      resolvedVersion = { ...resolvedVersion, minecraftVersion: clientJarVersion }
+    }
     const requiredMajor = Number((resolvedVersion as any).javaVersion?.majorVersion ?? 17)
     const preferred = instance.javaPath || config.globalJavaPath
     const java = chooseJava(javaList, requiredMajor, preferred)
@@ -288,7 +306,7 @@ export class GameService extends EventEmitter {
         accessToken,
         userType,
         launcherName: 'MineHarbor',
-        launcherBrand: 'MineHarbor 1.0.0',
+        launcherBrand: 'MineHarbor 1.0.1',
         maxMemory,
         minMemory,
         extraJVMArgs: splitCommandLine(config.jvmArgs),
@@ -298,7 +316,13 @@ export class GameService extends EventEmitter {
           cwd: instance.gameDir
         },
         ignoreInvalidMinecraftCertificates: true,
-        ignorePatchDiscrepancies: true
+        ignorePatchDiscrepancies: true,
+        // External/PCL versions may carry a patched vanilla jar or libraries
+        // that no longer match Mojang's SHA-1 metadata. Trust the existing
+        // installation and still repair/extract natives and legacy assets.
+        ...(instance.external
+          ? { prechecks: [LaunchPrecheck.checkLibraries, LaunchPrecheck.checkNatives, LaunchPrecheck.linkAssets] }
+          : {})
       } as any)
       session.child = child
       session.publicState.pid = child.pid
