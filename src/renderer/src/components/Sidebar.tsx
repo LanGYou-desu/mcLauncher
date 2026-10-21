@@ -36,6 +36,9 @@ export function Sidebar() {
   const runningIds = new Set(
     sessions.filter((session) => ['starting', 'running'].includes(session.status)).map((session) => session.instanceId)
   )
+  const recentInstances = [...instances]
+    .sort((a, b) => (b.lastPlayedAt ?? b.createdAt) - (a.lastPlayedAt ?? a.createdAt))
+    .slice(0, 4)
 
   return (
     <aside className="sidebar">
@@ -64,7 +67,7 @@ export function Sidebar() {
 
       <div className="sidebar-section-label recent-label">
         最近实例
-        <span>{instances.length}</span>
+        <span>{recentInstances.length}</span>
       </div>
       <div className="sidebar-instances">
         {instances.length === 0 ? (
@@ -73,7 +76,7 @@ export function Sidebar() {
             <span>还没有游戏实例<br /><em>去下载一个吧</em></span>
           </button>
         ) : (
-          instances.slice(0, 4).map((instance) => (
+          recentInstances.map((instance) => (
             <button
               key={instance.id}
               type="button"

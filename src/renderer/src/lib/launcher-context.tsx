@@ -274,10 +274,14 @@ export function LauncherProvider({ children }: { children: ReactNode }) {
         const result = await api.versions.launch(id)
         setConsoleSessionId(result.sessionId)
         setConsoleOpen(true)
+        // The main process has already persisted lastPlayedAt before returning.
+        // Update the sidebar immediately, then rescan summaries in the background.
+        const playedAt = Date.now()
+        setInstances((prev) =>
+          prev.map((instance) => (instance.id === id ? { ...instance, lastPlayedAt: playedAt } : instance))
+        )
         pushToast('正在打开 Minecraft，请稍候…', 'info')
-        window.setTimeout(() => {
-          void refreshInstances().catch(() => {})
-        }, 1800)
+        void refreshInstances().catch(() => {})
       } catch (error) {
         pushToast(friendlyError(error), 'error')
       } finally {
