@@ -162,10 +162,29 @@
 .instance-card-footer .text-button { font-size: 11.5px; }
 .instance-cover-bottom { font-size: 9.5px; }
 .instance-cover-version > em { font-size: 8.5px; }
-.instance-cover { height: 168px; }
-.instance-cover-heading h3 { font-size: 27px; }
+.instance-cover { height: 90px; }
+.instance-cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 90% at 22% 55%, color-mix(in srgb, var(--mark-color) 9%, transparent), transparent 62%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 55%);
+}
+.instance-cover-heading h3 { font-size: 22.5px; }
 .instance-cover-heading p { font-size: 11px; }
-.instance-cover-cube { opacity: .34; }
+.instance-cover-cube {
+  top: 2px;
+  right: 16px;
+  transform: scale(.8);
+  transform-origin: top right;
+  opacity: .9;
+}
+.instance-cover-cube i {
+  border-color: color-mix(in srgb, var(--loader-color) 55%, transparent);
+  background: color-mix(in srgb, var(--loader-color) 12%, transparent);
+}
 .instance-version-summary strong { font-size: 13.5px; }
 .instance-version-summary span { font-size: 10.5px; }
 .instance-play { width: 36px; height: 36px; border-radius: 9px; }

@@ -1,7 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
-  Boxes,
-  Ellipsis,
   FolderOpen,
   Loader2,
   MemoryStick,
@@ -210,7 +208,6 @@ export function VersionsPage() {
                 <div className={`instance-cover cover-${instance.loader}`}>
                   <div className="cover-grid" />
                   <div className="instance-cover-top">
-                    <LoaderBadge loader={instance.loader} />
                     <div className="instance-menu-wrap">
                       <button
                         className="cover-icon-button"
@@ -227,7 +224,10 @@ export function VersionsPage() {
                   </div>
                   <div className="instance-cover-cube"><i /><i /><i /><i /></div>
                   <div className="instance-cover-bottom">
-                    {running ? <span className="cover-running"><span className="live-dot" /> 游戏运行中</span> : <span>{instance.external ? '外部导入' : '矿港实例'}</span>}
+                    <span className="instance-cover-tech" style={{ color: meta.color }}>
+                      MC {instance.mcVersion} · {meta.name}{instance.loaderVersion ? ' ' + instance.loaderVersion : ''}
+                    </span>
+                    {running ? <span className="cover-running"><span className="live-dot" /> 游戏运行中</span> : null}
                   </div>
                 </div>
                 {menuId === instance.id ? (
@@ -249,12 +249,9 @@ export function VersionsPage() {
                 ) : null}
                 <div className="instance-card-body">
                   <div className="instance-title-row">
-                    <div className="instance-runtime-line">
-                      <span className="runtime-mc">MC {instance.mcVersion}</span>
-                      <span className="runtime-dot">·</span>
-                      <span className="runtime-loader" title={`${meta.name}${instance.loaderVersion ? ' ' + instance.loaderVersion : ''}`}>
-                        {meta.name}{instance.loaderVersion ? ' ' + instance.loaderVersion : ''}
-                      </span>
+                    <div className="instance-summary">
+                      <strong>{instance.modsCount} 个模组</strong>
+                      <span>{instance.shaderpacksCount} 光影 · {formatRelativeTime(instance.lastPlayedAt)}</span>
                     </div>
                     <button
                       className={`instance-play ${running ? 'is-running' : ''}`}
@@ -266,17 +263,16 @@ export function VersionsPage() {
                       {launchingInstanceId === instance.id ? <Loader2 size={15} className="spin" /> : running ? <SlidersHorizontal size={15} /> : <Play size={15} fill="currentColor" />}
                     </button>
                   </div>
-                  <div className="instance-metrics">
-                    <span><Boxes size={13} /> {instance.modsCount} 模组</span>
-                    <span><Ellipsis size={13} /> {instance.shaderpacksCount} 光影</span>
-                    <span><MemoryStick size={13} /> {Math.round(((instance.memoryMb ?? config.memoryMb) / 1024) * 10) / 10} GB</span>
-                    <span>{formatBytes(instance.installedSize)}</span>
+                  <div className="instance-tags-row">
+                    <LoaderBadge loader={instance.loader} compact />
+                    {instance.external ? <span className="micro-badge">外部</span> : null}
+                    <span className="micro-badge"><MemoryStick size={10} /> {Math.round(((instance.memoryMb ?? config.memoryMb) / 1024) * 10) / 10} GB</span>
                   </div>
                   <div className="instance-card-footer">
                     <button type="button" className="text-button" onClick={() => openContent(instance.id)}>
                       <SlidersHorizontal size={13} /> 管理内容
                     </button>
-                    <span>{formatRelativeTime(instance.lastPlayedAt)}</span>
+                    <span className="instance-size">{formatBytes(instance.installedSize)}</span>
                   </div>
                 </div>
               </article>
